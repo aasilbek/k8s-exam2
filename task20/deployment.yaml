@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend-something-duplicate
+  name: frontend-something-duplicate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-something-duplicate
+  template:
+    metadata:
+      labels:
+        app: frontend-something-duplicate
+    spec:
+      containers:
+      - image: nvrbckdown/something
+        name: something
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: final
+                operator: In
+                values:
+                - exam
+        
