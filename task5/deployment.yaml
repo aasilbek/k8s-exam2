@@ -1,0 +1,44 @@
+apiVersion: v1
+data:
+  AUTHOR: asilbek
+  EXAM_TYPE: Final Exam
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: config-info
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        env:
+          - name: AUTHOR
+            valueFrom:
+              configMapKeyRef:
+                name: config-info
+                key: AUTHOR
+          - name: EXAM_TYPE
+            valueFrom:
+              configMapKeyRef:
+                name: config-info
+                key: EXAM_TYPE
+        command: ['sh', '-c', 'echo My name is $(AUTHOR) and this my $(EXAM_TYPE) && sleep 3600']
+
+
