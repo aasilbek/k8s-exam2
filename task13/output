@@ -1,0 +1,4 @@
+Name:               node5
+Taints:             uacademy=proxima-devops:NoSchedule
+Name:               node1
+Taints:             bank=brb:NoSchedule
